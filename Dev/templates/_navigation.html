@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation_Bar</title>
+</head>
+<body>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+
+            height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            background-color: black;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+
+            height: 15%;
+        }
+
+        .item {
+            margin: 0 1%;
+
+            padding: 2%;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo {
+            margin-right: auto;
+            padding: 0;
+
+            background-color: #37E2D5;
+            color: #1a6a63;
+        }
+
+        .about {
+            background-color: #590696;
+        }
+
+        .portfolio {
+            background-color: #C70A80;
+        }
+
+        .resume {
+            background-color: #3EC70B; 
+        }
+
+        .contact{
+            background-color: #FBCB0A;
+            color: #544405;
+        }
+
+        @media (max-width: 1000px) {
+            .logo {
+                color: white;
+            }
+        }
+    </style>
+
+    <nav class="container">
+        <a href="" class="item logo"> LOGO </a>
+        <a href="" class="item about"> about </a>
+        <a href="" class="item portfolio"> portfolio </a>
+        <a href="" class="item resume"> resume </a>
+        <a href="" class="item contact"> contact me </a>
+    </nav>
+</body>
+</html>
