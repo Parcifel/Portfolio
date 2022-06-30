@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Boxicons cdn link -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="url('_sideBar.css')">
-    <title>Test_Lab - sideBar</title>
+    <title>SideBar</title>
 </head>
 
-<style>
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+<style> 
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
+        font-size: Arial, Helvetica, sans-serif;
     }
 
     body {
@@ -25,371 +23,200 @@
         overflow: hidden;
     }
 
-    .sidebar {
+    .navBar {
         position: fixed;
         top: 0;
         left: 0;
         height: 100%;
         width: 78px;
-        background: #11101d;
+        background: #24272a;
         padding: 6px 14px;
-        transition: all 0.5s ease
+        transition: all 0.5s ease;
     }
 
-    .sidebar.active {
+    .navBar.active {
         width: 240px;
     }
 
-    .sidebar .logo_content .logo {
-        color: #fff;
-        display: flex;
-        height: 50px;
-        width: 100%;
+    .navBar .display_content {
+        height: 40px;   
+        display: block;  
+        width: 100%;   
+        justify-content: space-between;
         align-items: center;
-        opacity: 0;
-        transition: all 0.5s ease;
-        pointer-events: none;
     }
 
-    .sidebar.active .logo_content .logo {
-        opacity: 1;
+    .navBar.active .display_content {
+        display: flex;
     }
 
-    .sidebar .logo_content .logo i {
-        font-size: 28px;
-        margin-right: 5px;
-    }
-
-    .sidebar .logo_content .logo .logo_name {
-        font-size: 20px;
-        font-weight: 400;
-    }
-
-    .sidebar #btn {
-        position: absolute;
-        color: #fff;
-        left: 50%;
-        top: 6px;
-        font-size: 20px;
-        height: 50px;
-        width: 50px;
-        text-align: center;
-        line-height: 50px;
-        transform: translateX(-50%);
-    }
-
-    .sidebar.active #btn {
-        left: 90%;
-    }
-
-    .sidebar ul {
-        margin-top: 20px;
-    }
-
-    .sidebar ul li {
+    /*-------------------------- Display Content ------------------------------*/
+    /* Darkmode */
+    .navBar .display_content .dark_mode {
+        height: 30px;
+        width: 70px;
         position: relative;
-        width: 100%;
-        height: 50px;
-        margin: 0 5px;
-        list-style: none;
-        line-height: 50px;
-    }
-
-    .sidebar ul li .tooltip {
-        position: absolute;
-        left: 122px;
-        top: 0;
-        transform: translate(-50%, -50%);
-        border-radius: 6px;
-        height: 35px;
-        width: 122px;
-        background: #fff;
-        line-height: 35px;
-        text-align: center;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        transition: 0s;
-        opacity: 0;
-        pointer-events: none;
-        display: block;
-    }
-
-    .sidebar.active ul li .tooltip {
+        transition: all 0.2s linear;
         display: none;
     }
 
-    .sidebar ul li:hover .tooltip {
-        transition: all 0.5s ease;
-        opacity: 1;
-        top: 50%;
+    .navBar.active .display_content .dark_mode {
+        visibility: visible;
+        display: block;
     }
 
-    .sidebar ul li input {
-        position: absolute;
-        height: 100%;
-        width: 100%;
+    .navBar .display_content .dark_mode input[type="checkbox"].dm_switch {
+        -webkit-appearance: none;
+            -moz-appearance: none;
+                appearance: none;
+        position: absolute; /*relative*/
+	    top: 0;
+        right: 0;
+        bottom: 0;
         left: 0;
-        top: 0;
-        border-radius: 12px;
-        outline: none;
-        border: none;
-        background: #1d1b31;
-        padding-left: 50px;
-        font-size: 18px;
-        color: #fff;
+        width: 100%; /*3.1em*/
+        height: 100%; /*1.5em*/
+        cursor: pointer;
+        background: rgb(240, 240, 240);
+        border-radius: 3.05em;
+        outline: 0; /*none*/
+        transition: all 0.3s ease-in-out;
+        z-index: 1;
+    }
+        
+    .navBar .display_content .dark_mode input[type="checkbox"].dm_switch:checked{
+        background: #1a1a1a;
     }
 
-    .sidebar ul li .bx-search {
-        position: absolute;
-        z-index: 99;
-        color: #fff;
-        font-size: 22px;
-        transition: all 0.5s ease;
-    }
-
-    .sidebar ul li .bx-search:hover {
-        background: #fff;
-        color: #1d1b31;
-    }
-
-    .sidebar ul li a {
-        color: #fff;
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        transition: all 0.4s ease;
-        border-radius: 12px;
-        white-space: nowrap;
-    }
-    .sidebar ul li a:hover {
-        background: #fff;
-        color: #11101d;
-    }
-
-    .sidebar ul li i {
-        height: 50px;
-        min-width: 50px;
-        border-radius: 12px;
-        line-height: 50px;
-        text-align: center;
-    }
-
-    .sidebar .link_name {
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.5s ease;
-    }
-
-    .sidebar.active .link_name {
+    .navBar .display_content .dark_mode input[type="checkbox"]:checked + svg.checkbox .is_checked{
+        -webkit-transform: translateX(0) rotate(0deg);
+                transform: translateX(0) rotate(0deg);
         opacity: 1;
-        pointer-events: auto;
     }
 
-    .sidebar .profile_content {
+    .navBar .display_content .dark_mode input[type="checkbox"]:checked + svg.checkbox .is_unchecked{
+        -webkit-transform: translateX(-200%) rotate(180deg);
+                transform: translateX(-200%) rotate(180deg);
+        opacity: 0;
+    }
+
+    .navBar .display_content .dark_mode svg.checkbox{
         position: absolute;
-        color: #fff;
+        top: 0;
+        right: 0;
         bottom: 0;
         left: 0;
         width: 100%;
-    }
-
-    .sidebar .profile_content .profile {
-        position: relative;
-        padding: 10px 6px;
-        height: 60px;
-        transition: all 0.5s ease;
-        background: none;
-    }
-
-    .sidebar.active .profile_content .profile {
-        background: #1d1b31;
-    }
-
-    .sidebar .profile_content .profile .profile_details {
-        display: flex;
-        align-items: center;
-        opacity: 0;
-        pointer-events: none;
-        white-space: nowrap;
-    }
-
-    .sidebar.active .profile .profile_details {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .profile .profile_details img {
-        height: 45px;
-        width: 45px;
-        object-fit: cover;
-        border-radius: 12px;
-    }
-
-    .profile .profile_details .name_job {
-        margin-left: 10px;
-    }
-
-    .profile .profile_details .name {
-        font-size: 15px;
-        font-weight: 400;
-    }
-
-    .profile .profile_details .job {
-        font-size: 12px;
-    }
-
-    .profile #log_out {
-        position: absolute;
-        left: 50%;
-        bottom: 5px;
-        transform: translateX(-50%);
-        min-width: 50px;
-        line-height: 50px;
-        font-size: 20px;
-        border-radius: 12px;
-        text-align: center;
-        transition: all 0.5s ease;
-        background: #1d1b31;
-    }
-
-    .sidebar.active .profile #log_out {
-        left: 88%;
-    }
-
-    .sidebar.active .profile #log_out {
-        background: none;
-    }
-
-    .home_content {
-        position: absolute;
-        width: calc(100% - 78px);
         height: 100%;
-        left: 78px;
-        transition: all 0.5s ease;
     }
 
-    .home_content .text {
-        font-size: 25px;
-        font-weight: 500;
-        color: #1d1b31;
-        margin-top: 12px;
+    .navBar .display_content .dark_mode svg.checkbox .is_checked{
+        opacity: 0;
+        fill: #EEEE30;
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-transform: translateX(200%) rotate(45deg);
+                transform: translateX(200%) rotate(45deg);
+        -webkit-transition: all .35s;
+        transition: all .35s;
     }
 
-    .sidebar.active ~ .home_content {
-        width: calc(100% - 240px);
-        left: 240px;
+    .navBar .display_content .dark_mode svg.checkbox .is_unchecked{
+        opacity: 1;
+        fill: #1a1a1a;
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+        -webkit-transition: all .35s;
+        transition: all .35s;
     }
-</style>
 
+    /*Hamburger Menu*/
+    .navBar .display_content .menu_content {
+        display: flex;
+    }
+
+    .navBar.active .display_content .menu_content {
+        margin-left: auto;
+    }
+
+    .navBar .display_content .menu_content .menu {
+        fill: #C0C5Ce;
+        left: 50%;
+        top: 6px;
+        font-size: 20px;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        line-height: 40px;
+        margin: auto;
+    }
+
+
+    /*-------------------------------------------------------------------------*/
+    
+
+    /*-------------------------- Profile Content ------------------------------*/
+    /*-------------------------------------------------------------------------*/
+
+    
+    /*------------------------ Navigation Content -----------------------------*/
+    /*-------------------------------------------------------------------------*/
+
+    
+    /*-------------------------- Social Content -------------------------------*/
+    /*-------------------------------------------------------------------------*/
+    </style>
+
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
 <body>
-    <div class="sidebar">
-        <div class="logo_content">
-            <div class="logo">
-                <i class='bx bxs-flask'></i>
-                <div class="logo_name">Test_Lab</div>
+
+    <div class="navBar">
+        <div class="display_content">
+            <div class="dark_mode">
+                <input type="checkbox" class="dm_switch">
+                <svg class="checkbox" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" width="100px" height="40px" viewBox="0 0 168 80"></svg>
+                    <!--<path class="is_checked" d="M256,0c-9.223,0-16.696,7.473-16.696,16.696v33.391c0,9.223,7.473,16.696,16.696,16.696s16.696-7.473,16.696-16.696    V16.696C272.696,7.473,265.223,0,256,0z M256,445.217c-9.223,0-16.696,7.473-16.696,16.696v33.391c0,9.223,7.473,16.696,16.696,16.696s16.696-7.473,16.696-16.696    v-33.391C272.696,452.69,265.223,445.217,256,445.217z M50.087,239.304H16.696C7.473,239.304,0,246.777,0,256s7.473,16.696,16.696,16.696h33.391    c9.223,0,16.696-7.473,16.696-16.696S59.31,239.304,50.087,239.304z M495.304,239.304h-33.391c-9.223,0-16.696,7.473-16.696,16.696s7.473,16.696,16.696,16.696h33.391    c9.217,0,16.696-7.473,16.696-16.696S504.521,239.304,495.304,239.304z M92.129,350.609c-4.604-7.989-14.81-10.723-22.804-6.108l-28.918,16.696c-7.983,4.608-10.722,14.82-6.108,22.804    c4.622,8.011,14.831,10.722,22.804,6.108l28.918-16.696C94.004,368.804,96.744,358.593,92.129,350.609z M477.7,128c-4.604-7.978-14.805-10.729-22.804-6.108l-28.918,16.696c-7.984,4.609-10.723,14.82-6.108,22.804    c4.622,8.011,14.83,10.722,22.804,6.108l28.918-16.696C479.576,146.195,482.315,135.984,477.7,128z M161.391,419.87c-7.978-4.619-18.196-1.864-22.804,6.108l-16.696,28.918c-4.615,7.984-1.875,18.196,6.108,22.804    c7.984,4.619,18.19,1.879,22.804-6.108l16.696-28.918C172.114,434.69,169.375,424.478,161.391,419.87z M384,34.3c-7.978-4.609-18.19-1.864-22.804,6.108L344.5,69.326c-4.615,7.984-1.875,18.196,6.108,22.804    c7.984,4.619,18.19,1.878,22.804-6.108l16.696-28.918C394.723,49.12,391.984,38.908,384,34.3z M390.108,454.898l-16.696-28.918c-4.604-7.989-14.793-10.729-22.804-6.108c-7.984,4.609-10.723,14.82-6.108,22.804    l16.696,28.918c4.622,8.011,14.83,10.721,22.804,6.108C391.984,473.092,394.723,462.881,390.108,454.898z M167.5,69.326l-16.696-28.918C146.201,32.424,136.005,29.69,128,34.3c-7.984,4.609-10.723,14.82-6.108,22.804    l16.696,28.918c4.622,8.011,14.831,10.722,22.804,6.108C169.375,87.521,172.114,77.31,167.5,69.326z M471.592,361.196L442.674,344.5c-7.984-4.615-18.196-1.864-22.804,6.108c-4.615,7.984-1.875,18.196,6.108,22.804    l28.918,16.696c7.984,4.619,18.19,1.878,22.804-6.108C482.315,376.016,479.576,365.804,471.592,361.196z M86.022,138.587l-28.918-16.696c-7.989-4.619-18.19-1.87-22.804,6.108c-4.615,7.984-1.875,18.196,6.108,22.804    L69.326,167.5c7.984,4.619,18.192,1.878,22.804-6.108C96.745,153.407,94.005,143.195,86.022,138.587z M256,100.174c-85.924,0-155.826,69.902-155.826,155.826S170.076,411.826,256,411.826S411.826,341.924,411.826,256    S341.924,100.174,256,100.174z"></path>
+                    <path class="is_unchecked" d="M132.77 22.348c7.705 10.695 5.286 25.617-5.417 33.327-2.567 1.85-5.38 3.116-8.288 3.812 7.977 5.03 18.54 5.024 26.668-.83 10.695-7.706 13.122-22.634 5.418-33.33-5.855-8.127-15.88-11.474-25.04-9.23 2.538 1.582 4.806 3.676 6.66 6.25z"></path>
+                    -->
+                    <path class="is_checked" d="M17 39.482c0-12.694 10.306-23 23-23s23 10.306 23 23-10.306 23-23 23-23-10.306-23-23z"></path>
+                    <path class="is_unchecked" d="M132.77 22.348c7.705 10.695 5.286 25.617-5.417 33.327-2.567 1.85-5.38 3.116-8.288 3.812 7.977 5.03 18.54 5.024 26.668-.83 10.695-7.706 13.122-22.634 5.418-33.33-5.855-8.127-15.88-11.474-25.04-9.23 2.538 1.582 4.806 3.676 6.66 6.25z"></path>
+                </svg>
             </div>
-            <i class='bx bx-menu' id='btn'></i>
+            <div class="menu_content">
+                <svg class="menu" id="btn" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"/></svg>
+            </div>
         </div>
-        <ul class="nav_list">
-            <li>
-                <i class='bx bx-search'></i>
-                <input type="text" placeholder="Search...">
-                <span class="tooltip">Search</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="link_name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-user' ></i>
-                    <span class="link_name">User</span>
-                </a>
-                <span class="tooltip">User</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-chat'></i>
-                    <span class="link_name">Messages</span>
-                </a>
-                <span class="tooltip">Messages</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-pie-chart-alt-2' ></i>
-                    <span class="link_name">Analytics</span>
-                </a>
-                <span class="tooltip">Analytics</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-folder' ></i>
-                    <span class="link_name">File Manager</span>
-                </a>
-                <span class="tooltip">File Manager</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cart' ></i>
-                    <span class="link_name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-heart'></i>
-                    <span class="link_name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cog'></i>
-                    <span class="link_name">Settings</span>
-                </a>
-                <span class="tooltip">Settings</span>
-            </li>
-        </ul>
+
         <div class="profile_content">
-            <div class="profile">
-                <div class="profile_details">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 489 489" style="enable-background:new 0 0 489 489;" xml:space="preserve">
-                        <g>
-                            <path d="M417.4,71.6C371.2,25.4,309.8,0,244.5,0S117.8,25.4,71.6,71.6S0,179.2,0,244.5s25.4,126.7,71.6,172.9S179.2,489,244.5,489    s126.7-25.4,172.9-71.6S489,309.8,489,244.5S463.6,117.8,417.4,71.6z M244.5,462C124.6,462,27,364.4,27,244.5S124.6,27,244.5,27    S462,124.6,462,244.5S364.4,462,244.5,462z"/>
-                            <path d="M244.5,203.2c35.1,0,63.6-28.6,63.6-63.6s-28.5-63.7-63.6-63.7s-63.6,28.6-63.6,63.6S209.4,203.2,244.5,203.2z     M244.5,102.9c20.2,0,36.6,16.4,36.6,36.6s-16.4,36.6-36.6,36.6s-36.6-16.4-36.6-36.6S224.3,102.9,244.5,102.9z"/>
-                            <path d="M340.9,280.5c-22.3-32.8-54.7-49.5-96.4-49.5s-74.1,16.6-96.4,49.5c-16.6,24.4-27.2,57.7-31.4,98.7    c-0.8,7.4,4.6,14.1,12,14.8c7.4,0.8,14.1-4.6,14.8-12c8.5-82.3,42.5-124,101-124s92.5,41.7,101,124c0.7,6.9,6.6,12.1,13.4,12.1    c0.5,0,0.9,0,1.4-0.1c7.4-0.8,12.8-7.4,12-14.8C368.1,338.1,357.5,304.9,340.9,280.5z"/>
-                        </g>
-                    </svg>
-                    <div class="name_job">
-                        <div class="name">Parcifel</div>
-                        <div class="job">Professional Gamer</div>
-                    </div>
-                </div>
-                <i class='bx bx-log-out' id='log_out'></i>
-            </div>
+
+        </div>
+
+        <div class="nav_content">
+
+        </div>
+    
+        <div class="social_content">
+
         </div>
     </div>
-    <div class="home_content">
-        <div class="text">Home Content</div>
-    </div>
-
-    <script>
-        let btn = document.querySelector('#btn');
-        let sidebar = document.querySelector('.sidebar');
-        let searchBtn = document.querySelector('.bx-search');
-
-        btn.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        })
-
-        searchBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        })
-    </script>
 
 </body>
+
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+<script>
+    let btn = document.querySelector('#btn');
+    let navBar= document.querySelector('.navBar');
+    let searchBtn = document.querySelector('.bx-search');
+
+    btn.addEventListener('click', function() {
+        navBar.classList.toggle('active');
+    })
+
+    searchBtn.addEventListener('click', function() {
+        navBar.classList.toggle('active');
+    })
+</script>
+
 </html>
-
-
